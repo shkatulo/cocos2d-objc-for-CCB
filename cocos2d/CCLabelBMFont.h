@@ -177,9 +177,9 @@ typedef struct _KerningHashElement
 	CCBMFontConfiguration	*_configuration;
     
 	// texture RGBA
-	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
+//	GLubyte		_displayedOpacity, _realOpacity;
+//	ccColor3B	_displayedColor, _realColor;
+//	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
 	BOOL		_opacityModifyRGB;
 	
 	// offset of the texture atlas
@@ -200,9 +200,9 @@ typedef struct _KerningHashElement
 /** fntFile used for the font */
 @property (nonatomic,retain) NSString* fntFile;
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
+//@property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
+//@property (nonatomic,readwrite) ccColor3B color;
 
 
 /** creates a BMFont label with an initial string and the FNT file. */

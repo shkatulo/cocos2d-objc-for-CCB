@@ -51,7 +51,7 @@
  *
  * @since v0.7.1
  */
-@interface CCSpriteBatchNode : CCNode <CCTextureProtocol>
+@interface CCSpriteBatchNode : CCNodeRGBA <CCTextureProtocol>
 {
 	CCTextureAtlas	*_textureAtlas;
 	ccBlendFunc		_blendFunc;

@@ -166,7 +166,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  @endcode
 
  */
-@interface CCParticleSystem : CCNode <CCTextureProtocol>
+@interface CCParticleSystem : CCNodeRGBA <CCTextureProtocol>
 {
 	// is the particle system active ?
 	BOOL _active;

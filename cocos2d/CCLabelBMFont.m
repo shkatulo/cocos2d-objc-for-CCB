@@ -439,7 +439,7 @@ void FNTConfigRemoveCache( void )
 @implementation CCLabelBMFont
 
 @synthesize alignment = _alignment;
-@synthesize cascadeColorEnabled = _cascadeColorEnabled, cascadeOpacityEnabled = _cascadeOpacityEnabled;
+//@synthesize cascadeColorEnabled = _cascadeColorEnabled, cascadeOpacityEnabled = _cascadeOpacityEnabled;
 
 #pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
@@ -879,87 +879,87 @@ void FNTConfigRemoveCache( void )
 }
 
 #pragma mark LabelBMFont - CCRGBAProtocol protocol
+//
+//-(ccColor3B) color
+//{
+//	return _realColor;
+//}
+//
+//-(ccColor3B) displayedColor
+//{
+//	return _displayedColor;
+//}
+//
+//-(void) setColor:(ccColor3B)color
+//{
+//	_displayedColor = _realColor = color;
+//	
+//	if( _cascadeColorEnabled ) {
+//		ccColor3B parentColor = ccWHITE;
+//		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColorEnabled] )
+//			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
+//		[self updateDisplayedColor:parentColor];
+//	}
+//}
+//
+//-(GLubyte) opacity
+//{
+//	return _realOpacity;
+//}
+//
+//-(GLubyte) displayedOpacity
+//{
+//	return _displayedOpacity;
+//}
 
--(ccColor3B) color
-{
-	return _realColor;
-}
-
--(ccColor3B) displayedColor
-{
-	return _displayedColor;
-}
-
--(void) setColor:(ccColor3B)color
-{
-	_displayedColor = _realColor = color;
-	
-	if( _cascadeColorEnabled ) {
-		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
-			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
-		[self updateDisplayedColor:parentColor];
-	}
-}
-
--(GLubyte) opacity
-{
-	return _realOpacity;
-}
-
--(GLubyte) displayedOpacity
-{
-	return _displayedOpacity;
-}
-
-/** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)opacity
-{
-	_displayedOpacity = _realOpacity = opacity;
-
-	if( _cascadeOpacityEnabled ) {
-		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
-			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
-		[self updateDisplayedOpacity:parentOpacity];
-	}
-}
-
--(void) setOpacityModifyRGB:(BOOL)modify
-{
-	_opacityModifyRGB = modify;
-    
-	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(_children, child)
-		[child setOpacityModifyRGB:modify];
-}
-
--(BOOL) doesOpacityModifyRGB
-{
-	return _opacityModifyRGB;
-}
-
-- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
-{
-	_displayedOpacity = _realOpacity * parentOpacity/255.0;
-
-	CCSprite *item;
-	CCARRAY_FOREACH(_children, item) {
-		[item updateDisplayedOpacity:_displayedOpacity];
-	}
-}
-
-- (void)updateDisplayedColor:(ccColor3B)parentColor
-{
-	_displayedColor.r = _realColor.r * parentColor.r/255.0;
-	_displayedColor.g = _realColor.g * parentColor.g/255.0;
-	_displayedColor.b = _realColor.b * parentColor.b/255.0;
-
-	CCSprite *item;
-	CCARRAY_FOREACH(_children, item) {
-		[item updateDisplayedColor:_displayedColor];
-	}
-}
+///** Override synthesized setOpacity to recurse items */
+//- (void) setOpacity:(GLubyte)opacity
+//{
+//	_displayedOpacity = _realOpacity = opacity;
+//
+//	if( _cascadeOpacityEnabled ) {
+//		GLubyte parentOpacity = 255;
+//		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacityEnabled] )
+//			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
+//		[self updateDisplayedOpacity:parentOpacity];
+//	}
+//}
+//
+//-(void) setOpacityModifyRGB:(BOOL)modify
+//{
+//	_opacityModifyRGB = modify;
+//    
+//	id<CCRGBAProtocol> child;
+//	CCARRAY_FOREACH(_children, child)
+//		[child setOpacityModifyRGB:modify];
+//}
+//
+//-(BOOL) doesOpacityModifyRGB
+//{
+//	return _opacityModifyRGB;
+//}
+//
+//- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+//{
+//	_displayedOpacity = _realOpacity * parentOpacity/255.0;
+//
+//	CCSprite *item;
+//	CCARRAY_FOREACH(_children, item) {
+//		[item updateDisplayedOpacity:_displayedOpacity];
+//	}
+//}
+//
+//- (void)updateDisplayedColor:(ccColor3B)parentColor
+//{
+//	_displayedColor.r = _realColor.r * parentColor.r/255.0;
+//	_displayedColor.g = _realColor.g * parentColor.g/255.0;
+//	_displayedColor.b = _realColor.b * parentColor.b/255.0;
+//
+//	CCSprite *item;
+//	CCARRAY_FOREACH(_children, item) {
+//		[item updateDisplayedColor:_displayedColor];
+//	}
+//}
 
 #pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point

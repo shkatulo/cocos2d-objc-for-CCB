@@ -969,12 +969,24 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_displayedOpacity = _realOpacity = opacity;
 	
-	if( _cascadeOpacityEnabled ) {
+//	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacityEnabled] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
-	}
+//	}
+}
+
+- (void) setCascadeOpacityEnabled:(BOOL)cascadeOpacityEnabled {
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+    
+    GLubyte parentOpacity = _cascadeOpacityEnabled ? _displayedOpacity : 255;
+    id<CCRGBAProtocol> item;
+    CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            [item updateDisplayedOpacity:parentOpacity];
+        }
+    }
 }
 
 - (void)updateDisplayedOpacity:(GLubyte)parentOpacity
@@ -1005,12 +1017,24 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_displayedColor = _realColor = color;
 	
-	if( _cascadeColorEnabled ) {
+//	if( _cascadeColorEnabled ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
-	}
+//	}
+}
+
+- (void) setCascadeColorEnabled:(BOOL)cascadeColorEnabled {
+    _cascadeColorEnabled = cascadeColorEnabled;
+    
+    ccColor3B parentColor = _cascadeColorEnabled ? _displayedColor : ccWHITE;
+    id<CCRGBAProtocol> item;
+    CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            [item updateDisplayedColor:parentColor];
+        }
+    }
 }
 
 - (void)updateDisplayedColor:(ccColor3B)parentColor

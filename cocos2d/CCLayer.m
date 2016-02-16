@@ -460,10 +460,22 @@
 
 	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacityEnabled] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}
+}
+
+- (void) setCascadeOpacityEnabled:(BOOL)cascadeOpacityEnabled {
+    _cascadeOpacityEnabled = cascadeOpacityEnabled;
+    
+    GLubyte parentOpacity = _cascadeOpacityEnabled ? _displayedOpacity : 255;
+    id<CCRGBAProtocol> item;
+    CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            [item updateDisplayedOpacity:parentOpacity];
+        }
+    }
 }
 
 -(ccColor3B) color
@@ -482,10 +494,22 @@
 	
 	if( _cascadeColorEnabled ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
+}
+
+- (void) setCascadeColorEnabled:(BOOL)cascadeColorEnabled {
+    _cascadeColorEnabled = cascadeColorEnabled;
+    
+    ccColor3B parentColor = _cascadeColorEnabled ? _displayedColor : ccWHITE;
+    id<CCRGBAProtocol> item;
+    CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            [item updateDisplayedColor:parentColor];
+        }
+    }
 }
 
 - (void)updateDisplayedOpacity:(GLubyte)parentOpacity
@@ -648,11 +672,22 @@
 	[self updateColor];
 }
 
+-(void) updateDisplayedColor:(ccColor3B)color {
+    [super updateDisplayedColor:color];
+    [self updateColor];
+}
+
 -(void) setOpacity: (GLubyte) opacity
 {
     [super setOpacity:opacity];
 	[self updateColor];
 }
+
+- (void) updateDisplayedOpacity:(GLubyte)opacity {
+    [super updateDisplayedOpacity:opacity];
+    [self updateColor];
+}
+
 @end
 
 
