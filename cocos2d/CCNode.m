@@ -1053,4 +1053,17 @@ static NSUInteger globalOrderOfArrival = 1;
     }
 }
 
+
+
+-(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
+{
+    [super addChild:child z:z tag:aTag];
+    
+    if ([child conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        CCNode<CCRGBAProtocol> *rgbaChild = (CCNode<CCRGBAProtocol> *)child;
+        if (_cascadeColorEnabled) rgbaChild.color = rgbaChild.color;
+        if (_cascadeOpacityEnabled) rgbaChild.opacity = rgbaChild.opacity;
+    }
+}
+
 @end

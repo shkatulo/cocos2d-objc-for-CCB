@@ -829,7 +829,7 @@
 -(void) setColor:(ccColor3B)color3
 {
     [super setColor:color3];
-	[self updateColor];
+//	[self updateColor];
 }
 
 -(void)updateDisplayedColor:(ccColor3B)parentColor
